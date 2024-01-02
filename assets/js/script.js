@@ -15,6 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    historyList.addEventListener('click', function(event) {
+        if (event.target.tagName === 'LI') {
+            const cityName = event.target.textContent;
+            getWeatherData(cityName);
+        }
+    });
+    
     function getWeatherData(cityName) {
         const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
         const units = 'metric';
@@ -64,9 +71,14 @@ document.addEventListener("DOMContentLoaded", function () {
             if (currentWeather.main && currentWeather.main.temp && currentWeather.wind && currentWeather.weather && currentWeather.weather[0]) {
                 const { name } = data.city;
                 const { main, weather, wind } = currentWeather;
+    
+                // Get the weather icon URL
+                const weatherIcon = `https://openweathermap.org/img/w/${weather[0].icon}.png`;
+    
                 const html = `
                     <h2>${name}</h2>
                     <p>Date: ${new Date(currentWeather.dt * 1000).toLocaleDateString()}</p>
+                    <img src="${weatherIcon}" alt="Weather Icon">
                     <p>Temperature: ${main.temp} °C</p>
                     <p>Humidity: ${main.humidity}%</p>
                     <p>Wind Speed: ${wind.speed} m/s</p>
@@ -86,15 +98,17 @@ document.addEventListener("DOMContentLoaded", function () {
     
         // Check if the expected properties are present in the data
         if (data && data.list && data.list.length > 0) {
-            const forecastHtml = data.list.slice(0, 5).map(item => {
-                const forecastDate = new Date(item.dt * 1000);
-                const formattedDate = `${forecastDate.getMonth() + 1}/${forecastDate.getDate()}/${forecastDate.getFullYear()}`;
+            const forecastHtml = data.list.filter(item => item.dt_txt.includes('12:00:00')).map(item => {
+                const forecastDate = new Date(item.dt * 1000 + data.city.timezone * 1000); // Adjust for timezone
+                const formattedDate = forecastDate.toLocaleDateString('en-US', { timeZone: 'UTC' });
+                const weatherIcon = `https://openweathermap.org/img/w/${item.weather[0].icon}.png`;
     
                 return `
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">${formattedDate}</h5>
-                            <p class="card-text">Temperature: ${item.main.temp} °C</p>
+                            <img src="${weatherIcon}" alt="Weather Icon">
+                            <p class="card-text">Current Temperature: ${item.main.temp} °C</p>
                             <p class="card-text">Humidity: ${item.main.humidity}%</p>
                             <p class="card-text">Wind Speed: ${item.wind.speed} m/s</p>
                             <p class="card-text">Weather Conditions: ${item.weather[0].description}</p>
@@ -110,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     
-
     function updateSearchHistory(cityName) {
         // Implement the logic to update the search history HTML
         const listItem = document.createElement('li');
