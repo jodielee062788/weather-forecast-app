@@ -73,7 +73,6 @@ function getWeatherData(cityName) {
 
 // Update the current weather display
 function updateCurrentWeather(data) {
-
     // Check if the expected properties are present in the data
     if (data && data.list && data.list.length > 0) {
         var currentWeather = data.list[0];
@@ -88,14 +87,18 @@ function updateCurrentWeather(data) {
             // Get the weather icon URL
             var weatherIcon = 'https://openweathermap.org/img/w/' + weather.icon + '.png';
 
-            // Update the HTML of current weather container
-            var html = '<h2>' + name + '</h2>' +
-                '<p>Date: ' + new Date(currentWeather.dt * 1000).toLocaleDateString() + '</p>' +
-                '<img src="' + weatherIcon + '" alt="Weather Icon">' +
-                '<p>Temperature: ' + main.temp + ' °C</p>' +
-                '<p>Humidity: ' + main.humidity + '%</p>' +
-                '<p>Wind Speed: ' + wind.speed + ' m/s</p>' +
-                '<p>Weather Conditions: ' + weather.description + '</p>';
+            // Update the HTML of current weather container with styling
+            var html = `
+                <div class="current-weather-container">
+                    <h2>${name}</h2>
+                    <p>${new Date(currentWeather.dt * 1000).toLocaleDateString()}</p>
+                    <img src="${weatherIcon}" alt="Weather Icon">
+                    <p>Temperature: ${main.temp} °C</p>
+                    <p>Humidity: ${main.humidity}%</p>
+                    <p>Wind Speed: ${wind.speed} m/s</p>
+                    <p>Weather Conditions: ${weather.description}</p>
+                </div>
+            `;
 
             currentWeatherContainer.innerHTML = html;
             // Make the current weather container visible
@@ -107,6 +110,7 @@ function updateCurrentWeather(data) {
         console.error('Error: Invalid data format for current weather');
     }
 }
+
 
 // update the forecast container
 function updateForecastData(data) {
@@ -121,8 +125,12 @@ function updateForecastData(data) {
             return generateForecastCard(item, formattedDate, weatherIcon);
         }).join('');
 
+        var titleHtml = '<h4 class="mt-3">5-day Forecast:</h4>';
         // Update the HTML of forecast container
-        forecastContainer.innerHTML = forecastHtml;
+        forecastContainer.innerHTML = `
+            <h4 class="mt-3 mb-3">5-day Forecast:</h4>
+            <div class="d-flex overflow-auto">${forecastHtml}</div>
+        `;
         // Make the forecast container visible
         forecastContainer.classList.remove('hidden');
 
@@ -133,17 +141,23 @@ function updateForecastData(data) {
 
 // Generate HTML for a forecast card
 function generateForecastCard(item, formattedDate, weatherIcon) {
-    return '<div class="card">' +
-        '<div class="card-body">' +
-        '<h5 class="card-title">' + formattedDate + '</h5>' +
-        '<img src="' + weatherIcon + '" alt="Weather Icon">' +
-        '<p class="card-text">Current Temperature: ' + item.main.temp + ' °C</p>' +
-        '<p class="card-text">Humidity: ' + item.main.humidity + '%</p>' +
-        '<p class="card-text">Wind Speed: ' + item.wind.speed + ' m/s</p>' +
-        '<p class="card-text">Weather Conditions: ' + item.weather[0].description + '</p>' +
-        '</div>' +
-        '</div>';
+    return `
+        <div class="card mr-2" style="flex: 0 0 auto; max-width: 12rem; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="card-body">
+                <h5 class="card-title text-center" style="font-size: 1.25rem;">${formattedDate}</h5>
+                <div class="text-center">
+                    <img src="${weatherIcon}" alt="Weather Icon">
+                </div>
+                <p class="card-text" style="font-size: 0.875rem;">Temp: ${item.main.temp} °C</p>
+                <p class="card-text" style="font-size: 0.875rem;">Humidity: ${item.main.humidity}%</p>
+                <p class="card-text" style="font-size: 0.875rem;">Wind Speed: ${item.wind.speed} m/s</p>
+                <p class="card-text" style="font-size: 0.875rem;">Weather Conditions: ${item.weather[0].description}</p>
+            </div>
+        </div>
+    `;
 }
+
+
 
 // Update search history in the UI
 function updateSearchHistory(cityName) {
