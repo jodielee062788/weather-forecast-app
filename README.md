@@ -27,23 +27,23 @@ To install and run this project locally, follow these steps:
 
 1. Open the Weather Dashboard in your web browser.
 
-    ![Screenshot of Javascript Quiz Frontpage](./assets/img/1.png)
+    ![Screenshot of Weather Dashboard Frontpage](./assets/img/1.png)
 
 2. Enter the name of the city you want to check the weather for in the search bar.
 
-    ![Screenshot of Javascript Quiz questions and choices](./assets/img/2.png)
+    ![Screenshot of Weather Dashboard Search Bar](./assets/img/2.png)
 
-3. View the current weather conditions, including the city name, date, weather icon, temperature, humidity, and wind speed.
+3. View the current weather conditions and 5-day forecast, including the city name, date, weather icon, temperature, humidity, wind speed, and weather condition description.
 
-    ![Screenshot of Javascript Quiz showing right and wrong answers](./assets/img/5.png)
+    ![Screenshot of Weather Dashboard showing current weather conditions and 5-day forecast](./assets/img/3.png)
 
-4. Scroll down to see the 5-day forecast, displaying the date, weather icon, temperature, humidity, and wind speed for each day.
+4. The searched city is added to the search history, and you can click on any city in the search history to view its weather conditions again. There is also a button to clear the search history.
 
-    ![Screenshot of Javascript Quiz - saving initials and score](./assets/img/3.png)
+    ![GIF of Weather Dashboard showing that searched city is added to search history and can be cleared by clicking the clear history button](./assets/img/4.gif)
 
-5. The searched city is added to the search history, and you can click on any city in the search history to view its weather conditions again.
-
-    ![Screenshot of Javascript Quiz leaderboard](./assets/img/4.png)
+    There is also a button to clear the search history.
+    
+    ![GIF of Weather Dashboard showing seach history can be cleared by clicking the clear history button](./assets/img/5.gif)
 
 ## Live Demo
 
