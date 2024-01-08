@@ -39,7 +39,10 @@ function getWeatherData(cityName) {
 
             return fetch(forecastApiUrl);
         })
-        .then(response => response.json())
+        .then(response => {
+            console.log('Forecast API Response:', response);
+            return response.json();
+        })
         .then(weatherData => {
             console.log('Weather Data:', weatherData);
 
@@ -59,35 +62,42 @@ function getWeatherData(cityName) {
 
 
 function updateCurrentWeather(data) {
-    console.log('Current Weather Data:', data);
+    console.log('Updating Current Weather:', data);
 
-    if (data && data.main && data.weather && data.weather.length > 0) {
-        var { name } = data;
-        var { main, weather, wind } = data;
+    if (data && data.list && data.list.length > 0) {
+        var currentWeather = data.list[0];
 
-        console.log('Name:', name);
-        console.log('Main:', main);
-        console.log('Weather:', weather);
-        console.log('Wind:', wind);
+        if (currentWeather.main && currentWeather.main.temp && currentWeather.wind && currentWeather.weather && currentWeather.weather[0]) {
+            var name = data.city.name;
+            var main = currentWeather.main;
+            var weather = currentWeather.weather[0];
+            var wind = currentWeather.wind;
 
-        var weatherIcon = `https://openweathermap.org/img/w/${weather[0].icon}.png`;
+            console.log('City Name:', name);
+            console.log('Main:', main);
+            console.log('Weather:', weather);
+            console.log('Wind:', wind);
 
-        var html = `
-            <h2>${name}</h2>
-            <p>Date: ${new Date(data.dt * 1000).toLocaleDateString()}</p>
-            <img src="${weatherIcon}" alt="Weather Icon">
-            <p>Temperature: ${main.temp} °C</p>
-            <p>Humidity: ${main.humidity}%</p>
-            <p>Wind Speed: ${wind.speed} m/s</p>
-            <p>Weather Conditions: ${weather[0].description}</p>
-        `;
-        currentWeatherContainer.innerHTML = html;
-        currentWeatherContainer.classList.remove('hidden');
+            var weatherIcon = `https://openweathermap.org/img/w/${weather.icon}.png`;
+
+            var html = `
+                <h2>${name}</h2>
+                <p>Date: ${new Date(currentWeather.dt * 1000).toLocaleDateString()}</p>
+                <img src="${weatherIcon}" alt="Weather Icon">
+                <p>Temperature: ${main.temp} °C</p>
+                <p>Humidity: ${main.humidity}%</p>
+                <p>Wind Speed: ${wind.speed} m/s</p>
+                <p>Weather Conditions: ${weather.description}</p>
+            `;
+            currentWeatherContainer.innerHTML = html;
+            currentWeatherContainer.classList.remove('hidden');
+        } else {
+            console.error('Error: Invalid data format for current weather');
+        }
     } else {
         console.error('Error: Invalid data format for current weather');
     }
 }
-
 
 function handleForecastData(data) {
     console.log('Forecast Data:', data);
