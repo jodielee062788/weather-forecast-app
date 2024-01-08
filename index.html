@@ -5,28 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
 
-    <div class="container mt-5">
-        <h1 class="text-center mb-4">Weather Dashboard</h1>
+    <div class="container mt-3">
+        <div class="jumbotron text-center">
+            <h1 class="display-4">Weather Dashboard</h1>
+        </div>
         
-        <form id="search-form">
-            <div class="form-group">
-                <label for="cityInput">Enter City:</label>
-                <input type="text" class="form-control" id="cityInput" placeholder="City">
+        <div id="search-container">
+            <!-- Update your HTML for the form -->
+            <div id="search-form">
+                <form class="bg-light p-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control rounded-pill" id="cityInput" placeholder="City">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-search" title="Search City">
+                                <span class="bi bi-search custom-icon"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <button type="submit" class="btn btn-primary">Search</button>
-        </form>
 
-        <div id="currentWeather" class="mt-4"></div>
+            <div id="searchHistory">
+                <h4>Search History:</h4>
+                <ul id="historyList" class="list-group"></ul>
+            </div>
+        </div>
 
-        <div id="forecast" class="mt-4"></div>
+        <div class="row">
+            <!-- Hidden by default -->
+            <div id="currentWeather" class="col mt-4 hidden"></div>
 
-        <div id="searchHistory" class="mt-4">
-            <h4>Search History:</h4>
-            <ul id="historyList" class="list-group"></ul>
+            <!-- Hidden by default -->
+            <div id="forecast" class="col mt-4 hidden"></div>
         </div>
     </div>
 
