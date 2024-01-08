@@ -6,8 +6,8 @@ body {
 }
 
 .container {
-    max-width: 80%; /* Adjust the width based on your preference */
-    margin: 0 auto; /* Center the container horizontally */
+    max-width: 80%; 
+    margin: 0 auto; 
 }
 
 .jumbotron {
@@ -46,7 +46,7 @@ h1 {
 
 .custom-icon {
     font-weight: bold;
-    font-size: 1.20rem; /* Adjust font size as needed */
+    font-size: 1.20rem; 
 }
 
 #searchHistory {
@@ -77,7 +77,7 @@ h1 {
 }
 
 .current-weather-container h2 {
-    font-size: 2rem; /* Increase font size for city name */
+    font-size: 2rem; 
     text-align: center;
 }
 
@@ -87,10 +87,10 @@ h1 {
 }
 
 .current-weather-container img {
-    width: 70px; /* Adjust the width of the icon as needed */
-    height: 70px; /* Adjust the height of the icon as needed */
-    display: block; /* Make the image a block element */
-    margin: 0 auto; /
+    width: 70px; 
+    height: 70px; 
+    display: block; 
+    margin: 0 auto; 
 }
 
 .hidden {
